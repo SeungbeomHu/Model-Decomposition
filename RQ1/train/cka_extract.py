@@ -28,7 +28,7 @@ layers = []
 for i,l in enumerate(best_model.layers):
     if 'add' in l.name:
         layers.append(i)
-print(layers)  
+print("layer : " + str(layers))
 cka = pickle.load(tf.io.gfile.GFile(cka_dir, 'rb'))
 
 cka1 = cka[layers]

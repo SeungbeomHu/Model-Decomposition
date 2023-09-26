@@ -7,17 +7,21 @@ import pickle
 import random
 import re
 
+import logging
 from absl import app
 from absl import flags
 import numpy as np
-import tensorflow.compat.v2 as tf
-from tensorflow.keras import backend as K
+import tensorflow as tf
+from tensorflow.python.keras import backend as K
 import tensorflow_datasets as tfds
-from cifar_train1 import load_test_data, preprocess_data
-from efficient_CKA import *
+from cifar_train import load_test_data, preprocess_data
+from effective_CKA import *
 
-tf.enable_v2_behavior()
+tf.compat.v2.enable_v2_behavior()
+tf = tf.compat.v2
 gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
+
+print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
 
 FLAGS = flags.FLAGS
 flags.DEFINE_integer('cka_batch', 256, 'Batch size used to approximate CKA')
@@ -28,8 +32,8 @@ flags.DEFINE_string('experiment_dir', None,
                     'Path to where the trained model is saved')
 
 
-
 def normalize_activations(act):
+
   act = act.reshape(act.shape[0], -1)
   act_norm = np.linalg.norm(act, axis=1)
   act /= act_norm[:, None]
@@ -84,7 +88,6 @@ def compute_cka_internal(model_dir,
   out_dir = os.path.join(model_dir, filename)
   if tf.io.gfile.exists(out_dir):
     return
-
   model = tf.keras.models.load_model(model_dir)
   if use_train_mode:
     model = convert_bn_to_train_mode(model)
@@ -117,8 +120,8 @@ def compute_cka_internal(model_dir,
 
 
 def main(argv):
+  VDC = tf.config.experimental.VirtualDeviceConfiguration
   tf.config.experimental.set_virtual_device_configuration(gpus[0],[tf.config.experimental.VirtualDeviceConfiguration(memory_limit=FLAGS.gpu)])
-
   compute_cka_internal(FLAGS.experiment_dir)
 if __name__ == '__main__':
   app.run(main)

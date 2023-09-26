@@ -7,14 +7,16 @@ import pickle
 import random
 import re
 
+import logging
+
 from absl import app
 from absl import flags
 import numpy as np
-import tensorflow.compat.v2 as tf
+import tensorflow.python.compat.v2_compat as tf
 from tensorflow.keras import backend as K
 import tensorflow_datasets as tfds
-from cifar_train1 import load_test_data, preprocess_data
-from efficient_CKA import *
+from RQ1.train.cifar_train import load_test_data, preprocess_data
+from effective_CKA import *
 
 tf.enable_v2_behavior()
 gpus = tf.config.experimental.list_physical_devices(device_type='GPU')

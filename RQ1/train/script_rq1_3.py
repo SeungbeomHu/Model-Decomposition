@@ -1,16 +1,16 @@
 import os
 import _thread
 import time
-import pynvml
-def find_gpu(req):
-    pynvml.nvmlInit()
-    for i in range(4):
-        handle = pynvml.nvmlDeviceGetHandleByIndex(i)    
-        meminfo = pynvml.nvmlDeviceGetMemoryInfo(handle)
-        print(meminfo.free / 1024**2)
-        if (meminfo.free / 1024**2) > req+300:
-            return i
-    return 5
+# import pynvml
+# def find_gpu(req):
+#     pynvml.nvmlInit()
+#     for i in range(4):
+#         handle = pynvml.nvmlDeviceGetHandleByIndex(i)
+#         meminfo = pynvml.nvmlDeviceGetMemoryInfo(handle)
+#         print(meminfo.free / 1024**2)
+#         if (meminfo.free / 1024**2) > req+300:
+#             return i
+#     return 5
 def shell(order):
     time.sleep(3) 
     os.system(order)
@@ -27,11 +27,11 @@ for seed in range(8,11):
     for div in divs:
         for target in targets:
             for deep,gpu in zip(deeps,gpus):
-                g = find_gpu(gpu)
-                while g==5:
-                    print('--------------------------------------')
-                    time.sleep(5)
-                    g = find_gpu(gpu)
+                g = 0
+                # while g==5:
+                #     print('--------------------------------------')
+                #     time.sleep(5)
+                #     g = find_gpu(gpu)
 
                 dir = './checkpoint/cifar-depth-{}-width-1-bs-128-lr-0.010000-reg-0.005000-div-{}-targets-{}-copy-{}/weights.300.ckpt/'.format(deep,div,target,seed)               
                 des_dir = dir + 'cka_within_model_256_b.pkl'

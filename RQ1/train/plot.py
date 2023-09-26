@@ -1,6 +1,6 @@
 from math import sqrt,ceil
 import matplotlib.pyplot as plt
-import seaborn as sns
+#import seaborn as sns
 import numpy as np
 import tensorflow as tf
 import os

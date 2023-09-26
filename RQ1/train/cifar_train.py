@@ -1,23 +1,28 @@
 # coding=utf-8
+import keras.datasets.cifar10
 from absl import app
 from absl import flags
+import pickle
 
 import functools
 import os
 import numpy as np
 from numpy.random import randint
 
-import tensorflow.compat.v2 as tf
+from keras.datasets import cifar10
+
+import tensorflow as tf
 import tensorflow_datasets as tfds
 
 from resnet_cifar import ResNet_CIFAR
 
-tf.enable_v2_behavior()
+tf.compat.v2.enable_v2_behavior()
+tf = tf.compat.v2
 gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
 
 FLAGS = flags.FLAGS
 flags.DEFINE_integer('batch_size', 128, 'Batch size')
-flags.DEFINE_float('learning_rate', 0.01, 'Learning rate')
+flags.DEFINE_float('learning_rate', 0.005, 'Learning rate')
 flags.DEFINE_integer('epochs', 300, 'Number of epochs to train for')
 flags.DEFINE_float('weight_decay', 0.005, 'L2 regularization')
 flags.DEFINE_integer('depth', 56, 'No. of layers to use in the ResNet model')
@@ -109,13 +114,13 @@ def load_train_data(batch_size,
   else:
     start = randint(0,100-div)
   train_dataset = tfds.load('cifar10',split='train[{}%:{}%]'.format(start,start+div),as_supervised=True)
-  
-  
+
 
   all_labels = []
   all_images = []
-  for images, labels in train_dataset:  
 
+
+  for images, labels in train_dataset:
     if labels.numpy() >= targets:
       continue
     else:
@@ -133,6 +138,9 @@ def load_train_data(batch_size,
 
   train_dataset = train_dataset.batch(batch_size, drop_remainder=True)
   train_dataset = train_dataset.prefetch(tf.data.experimental.AUTOTUNE)
+
+  print(len(train_dataset))
+
   return train_dataset
 
 
@@ -149,7 +157,7 @@ def load_test_data(batch_size,
         name=dataset_name, split='test', as_supervised=as_supervised)
   all_labels = []
   all_images = []
-  for images, labels in test_dataset:  
+  for images, labels in test_dataset:
 
     if labels.numpy() >= targets:
       continue
@@ -173,6 +181,7 @@ def load_test_data(batch_size,
 def main(argv):
   tf.config.experimental.set_virtual_device_configuration(gpus[0],[tf.config.experimental.VirtualDeviceConfiguration(memory_limit=FLAGS.gpu)])
   n_data = 50000
+
   train_dataset = load_train_data(
       FLAGS.batch_size,
       dataset_name=FLAGS.dataset_name,
@@ -180,16 +189,17 @@ def main(argv):
       div=FLAGS.div,
       targets=FLAGS.targets,
       randomize_labels=FLAGS.randomize_labels,
-      as_supervised=not FLAGS.save_image)
+      as_supervised=True)
 
   test_dataset = load_test_data(
       FLAGS.batch_size, dataset_name=FLAGS.dataset_name,targets=FLAGS.targets, n_data=10000)
-  
+
+
   print(n_data)
   print(FLAGS.batch_size)
   steps_per_epoch = n_data // FLAGS.batch_size - 2
   print(steps_per_epoch)
-  optimizer = tf.keras.optimizers.SGD(FLAGS.learning_rate, momentum=0.9)
+  optimizer = tf.keras.optimizers.legacy.SGD(FLAGS.learning_rate, momentum=0.1)
   schedule = tf.keras.experimental.CosineDecay(FLAGS.learning_rate,
                                                FLAGS.epochs)
   lr_scheduler = tf.keras.callbacks.LearningRateScheduler(schedule)
@@ -206,6 +216,8 @@ def main(argv):
         optimizer,
         tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
         metrics=['acc'])
+
+
 
 
   if FLAGS.copy >= 0:
