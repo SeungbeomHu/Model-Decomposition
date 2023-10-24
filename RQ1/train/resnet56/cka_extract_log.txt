@@ -1,0 +1,74 @@
+/Users/heoseungbeom/code/Deep-Arc/venv/bin/python /Users/heoseungbeom/code/Deep-Arc/RQ1/train/script_rq1_2.py
+/Users/heoseungbeom/code/Deep-Arc/RQ1/train/resnet56/cka_within_model_256.pkl
+CUDA_VISIBLE_DEVICES=0 python analysis.py --experiment_dir /Users/heoseungbeom/code/Deep-Arc/RQ1/train/resnet56/ --gpu 0
+Num GPUs Available:  1
+------------ /Users/heoseungbeom/code/Deep-Arc/RQ1/train/resnet56/
+2023-10-24 20:24:22.460327: I metal_plugin/src/device/metal_device.cc:1154] Metal device set to: Apple M1 Pro
+2023-10-24 20:24:22.460351: I metal_plugin/src/device/metal_device.cc:296] systemMemory: 16.00 GB
+2023-10-24 20:24:22.460358: I metal_plugin/src/device/metal_device.cc:313] maxCacheSize: 5.33 GB
+2023-10-24 20:24:22.460551: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:303] Could not identify NUMA node of platform GPU ID 0, defaulting to 0. Your kernel may not have been built with NUMA support.
+2023-10-24 20:24:22.460573: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:269] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 0 MB memory) -> physical PluggableDevice (device: 0, name: METAL, pci bus id: <undefined>)
+I1024 20:24:34.307832 8133677824 dataset_info.py:599] Load dataset info from /Users/heoseungbeom/tensorflow_datasets/cifar10/3.0.2
+I1024 20:24:34.311551 8133677824 dataset_builder.py:573] Reusing dataset cifar10 (/Users/heoseungbeom/tensorflow_datasets/cifar10/3.0.2)
+I1024 20:24:34.343610 8133677824 logging_logger.py:49] Constructing tf.data.Dataset cifar10 for split test, from /Users/heoseungbeom/tensorflow_datasets/cifar10/3.0.2
+I1024 20:26:55.902196 8133677824 dataset_info.py:599] Load dataset info from /Users/heoseungbeom/tensorflow_datasets/cifar10/3.0.2
+I1024 20:26:55.904359 8133677824 dataset_builder.py:573] Reusing dataset cifar10 (/Users/heoseungbeom/tensorflow_datasets/cifar10/3.0.2)
+I1024 20:26:55.925736 8133677824 logging_logger.py:49] Constructing tf.data.Dataset cifar10 for split test, from /Users/heoseungbeom/tensorflow_datasets/cifar10/3.0.2
+I1024 20:29:22.658606 8133677824 dataset_info.py:599] Load dataset info from /Users/heoseungbeom/tensorflow_datasets/cifar10/3.0.2
+I1024 20:29:22.662065 8133677824 dataset_builder.py:573] Reusing dataset cifar10 (/Users/heoseungbeom/tensorflow_datasets/cifar10/3.0.2)
+I1024 20:29:22.686585 8133677824 logging_logger.py:49] Constructing tf.data.Dataset cifar10 for split test, from /Users/heoseungbeom/tensorflow_datasets/cifar10/3.0.2
+I1024 20:31:54.103328 8133677824 dataset_info.py:599] Load dataset info from /Users/heoseungbeom/tensorflow_datasets/cifar10/3.0.2
+I1024 20:31:54.106487 8133677824 dataset_builder.py:573] Reusing dataset cifar10 (/Users/heoseungbeom/tensorflow_datasets/cifar10/3.0.2)
+I1024 20:31:54.133357 8133677824 logging_logger.py:49] Constructing tf.data.Dataset cifar10 for split test, from /Users/heoseungbeom/tensorflow_datasets/cifar10/3.0.2
+I1024 20:34:31.181402 8133677824 dataset_info.py:599] Load dataset info from /Users/heoseungbeom/tensorflow_datasets/cifar10/3.0.2
+I1024 20:34:31.184459 8133677824 dataset_builder.py:573] Reusing dataset cifar10 (/Users/heoseungbeom/tensorflow_datasets/cifar10/3.0.2)
+I1024 20:34:31.214764 8133677824 logging_logger.py:49] Constructing tf.data.Dataset cifar10 for split test, from /Users/heoseungbeom/tensorflow_datasets/cifar10/3.0.2
+I1024 20:36:55.997282 8133677824 api.py:446] mean_hsic:[[  21026.559   20659.146   40531.64  ...    9642.052    9521.645
+    14560.025]
+ [  20659.146   20730.51    42560.55  ...   10037.264   10001.037
+    15282.795]
+ [  40531.64    42560.55   166618.64  ...   35056.344   36927.35
+    55031.45 ]
+ ...
+ [   9642.052   10037.264   35056.344 ...  136889.14   122757.43
+   221457.47 ]
+ [   9521.645   10001.037   36927.35  ...  122757.43   137247.31
+   237184.55 ]
+ [  14560.025   15282.795   55031.45  ...  221457.47   237184.55
+  1063428.4  ]]
+I1024 20:36:56.119216 8133677824 api.py:446] normalization:[ 145.00537   143.98094   408.18945   235.34525   189.80519   306.81555
+  167.43289   125.36583   214.40982   173.67258   130.97136    95.57548
+  208.57005   120.12027   146.0077    195.86848   122.860374   96.42921
+  113.73615   169.36198   113.41758   134.84204   172.17395    97.67409
+   80.021194   86.247894  151.13564    88.85769   109.880295  144.15892
+   91.46078    75.92442    84.386154  133.18352    77.3897    106.96073
+  127.81891    84.08932    72.83897    71.74288   134.36665    75.52094
+   93.797516  133.36475    79.46991    68.56512    84.0248    126.37761
+   71.717804   82.013084  126.30982    77.29532    68.442406   58.41401
+  120.20741    72.4208     89.76612   127.79424    73.678505   66.47763
+   88.27376   121.95357    81.3823    111.14022   188.48305    72.641556
+   65.359474   81.67898   176.2275    111.52741   139.1872    204.74722
+  119.897285  168.64908   237.25546   190.71356   124.28961   140.7275
+  212.26276   131.30807   162.90529   247.0468    174.26584   127.09864
+  153.90909   227.45366   137.82652   189.97388   278.22055   167.63425
+  128.8951    104.85861   218.6755    137.03987   187.25705   265.7463
+  164.98164   129.5088    120.223114  231.44662   147.06976   171.19351
+  345.31265   160.58926   127.7902    111.82495   241.12253   151.60268
+  299.67575   371.43796   151.24406   124.50703   114.24496   233.16066
+  153.4981    288.09238   327.32263   148.34312   122.98122   174.64597
+  258.57324   176.15648   311.98193   474.1511    154.56012   124.63228
+  208.50615   322.2727    227.26167   347.98495   693.2905    135.05101
+  112.77273   164.31023   240.85684   152.1846    159.98466   268.44907
+  179.02193   256.27417   323.2278    295.48505   185.04494   194.95688
+  299.603     221.42232   322.41696   422.00708   325.99854   226.5532
+  201.13342   333.15057   264.94864   291.14078   456.28      324.80597
+  254.0595    262.38095   365.76028   301.2536    338.5619    557.2597
+  331.52515   273.7665    291.5635    460.9055    337.64166   389.8414
+  732.12946   361.96713   305.34146   328.70868   603.2598    482.46976
+  495.73917  1144.4315    353.39297   310.5379    257.9845    534.35516
+  429.462     391.95804   932.0599    366.67267   327.09967   259.49854
+  568.62384   465.55316   462.67697   974.3987    396.91245   357.90115
+  255.98303   666.31384   490.99738   484.70905  1118.851     407.91998
+  369.98532   370.46906  1031.2267  ]
+
+종료 코드 0(으)로 완료된 프로세스
